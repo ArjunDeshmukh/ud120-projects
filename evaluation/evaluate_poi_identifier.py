@@ -26,6 +26,19 @@ labels, features = targetFeatureSplit(data)
 
 
 
-### your code goes here 
+### your code goes here
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import precision_score, recall_score
+import numpy as np
 
+features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.30, random_state=42)
 
+regressor = DecisionTreeRegressor()
+regressor.fit(features_train, labels_train)
+print "Accuracy = ", regressor.score(features_test, labels_test)
+print "POIs: ", regressor.predict(features_test)
+print "Num of people in test set: ", len(features_test)
+print "True Positive? : ", np.multiply(regressor.predict(features_test), labels_test)
+print "Precision: ", precision_score(labels_test, regressor.predict(features_test))
+print "Recall: ", recall_score(labels_test, regressor.predict(features_test))
